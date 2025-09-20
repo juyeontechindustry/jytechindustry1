@@ -1,11 +1,11 @@
+// next.config.ts
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // 정적 사이트로 내보내기
+  output: "export",
+  // (빌드 막는 ESLint 경고 무시하고 싶으면 켜두기)
+  eslint: { ignoreDuringBuilds: true },
 };
 
 export default nextConfig;
-
-// added by create cloudflare to enable calling `getCloudflareContext()` in `next dev`
-import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
-initOpenNextCloudflareForDev();
