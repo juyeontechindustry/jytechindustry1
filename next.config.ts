@@ -1,8 +1,10 @@
+// next.config.ts
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   eslint: { ignoreDuringBuilds: true },
-  images: { unoptimized: true } // Cloudflare Pages에서 이미지 최적화 비활성화
+  images: { unoptimized: true },
+  // ❌ 절대 넣지 말 것: output: "export"
 };
 
 export default nextConfig;
