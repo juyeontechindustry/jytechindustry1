@@ -4,62 +4,157 @@ import Script from "next/script";
 import Link from "next/link";
 import React from "react";
 
-export default function Contact() {
+export default function ContactPage() {
+  // 스타일 객체 정의 (연락처 페이지 전용)
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    padding: "12px",
+    border: "1px solid #e5e7eb",
+    borderRadius: 10,
+  };
+  const grid2: React.CSSProperties = {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+    gap: 16,
+  };
+  const grid3: React.CSSProperties = {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+    gap: 16,
+  };
+  const btnPrimary: React.CSSProperties = {
+    padding: "12px 16px",
+    borderRadius: 10,
+    border: "1px solid #f59e0b",
+    background: "#f59e0b",
+    fontWeight: 700,
+    color: "#111",       // 가독성을 위해 버튼 텍스트를 어두운 색으로
+  };
+  const btnGhost: React.CSSProperties = {
+    padding: "12px 16px",
+    borderRadius: 10,
+    border: "1px solid #e5e7eb",
+    fontWeight: 700,
+    textDecoration: "none",
+    color: "#111",       // 고스트 버튼 텍스트 색 (필요에 따라 조정)
+    display: "inline-block",
+  };
+  const cardStyle: React.CSSProperties = {
+    border: "1px solid #e5e7eb",
+    borderRadius: 12,
+    padding: 18,
+    background: "#fff",
+  };
+
   return (
-    <section style={{padding:"48px 16px"}}>
-      <div style={{maxWidth:820,margin:"0 auto"}}>
+    <section style={{ padding: "48px 16px" }}>
+      <div style={{ maxWidth: 820, margin: "0 auto" }}>
         <h1>문의 / 견적 요청</h1>
         <p>아래 양식을 작성해 주시면 담당자가 빠르게 연락드립니다.</p>
 
-        <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer />
+        {/* Cloudflare Turnstile 스크립트 로드 */}
+        <Script 
+          src="https://challenges.cloudflare.com/turnstile/v0/api.js" 
+          async 
+          defer 
+        />
 
-        <form action="https://formspree.io/f/xnnbedwe" method="POST" style={{display:"grid",gap:16}}>
+        {/* 연락처/견적 문의 폼 시작 */}
+        <form 
+          action="https://formspree.io/f/xnnbedwe" 
+          method="POST" 
+          style={{ display: "grid", gap: 16 }}
+        >
+          {/* 성함, 연락처 등 기본 정보 입력 필드 */}
           <div style={grid2}>
-            <div><label>성함*</label><input name="name" required style={input}/></div>
-            <div><label>연락처*</label><input name="phone" required style={input}/></div>
-            <div><label>이메일</label><input type="email" name="email" style={input}/></div>
-            <div><label>현장 위치(시/구)</label><input name="location" style={input}/></div>
             <div>
-              <label>공사 구분</label>
-              {/* 캐스팅 없이 그대로 사용 */}
-              <select name="category" style={input}>
-                <option>건축/리모델링</option><option>토목/외부</option>
-                <option>설비</option><option>전기</option><option>기타</option>
+              <label htmlFor="name">성함<span style={{color:'red'}}>*</span></label>
+              <input id="name" name="name" required style={inputStyle} />
+            </div>
+            <div>
+              <label htmlFor="phone">연락처<span style={{color:'red'}}>*</span></label>
+              <input id="phone" name="phone" required style={inputStyle} />
+            </div>
+            <div>
+              <label htmlFor="email">이메일</label>
+              <input id="email" type="email" name="email" style={inputStyle} />
+            </div>
+            <div>
+              <label htmlFor="location">현장 위치 (시/구)</label>
+              <input id="location" name="location" style={inputStyle} />
+            </div>
+            <div>
+              <label htmlFor="category">공사 구분</label>
+              {/* select 기본값을 첫 번째 옵션으로, 필요시 defaultValue 속성 사용 */}
+              <select id="category" name="category" style={inputStyle}>
+                <option value="건축/리모델링">건축/리모델링</option>
+                <option value="토목/외부">토목/외부</option>
+                <option value="설비">설비</option>
+                <option value="전기">전기</option>
+                <option value="기타">기타</option>
               </select>
             </div>
-            <div><label>예상 일정</label><input name="schedule" placeholder="예: 2025년 10월 착공 희망" style={input}/></div>
+            <div>
+              <label htmlFor="schedule">예상 일정</label>
+              <input 
+                id="schedule" 
+                name="schedule" 
+                placeholder="예: 2025년 10월 착공 희망" 
+                style={inputStyle} 
+              />
+            </div>
           </div>
 
+          {/* 상세 내용 입력란 */}
           <div>
-            <label>상세 내용*</label>
-            <textarea name="message" required style={{...input,minHeight:140}} />
-            <p style={{fontSize:12,color:"#667"}}>개인정보는 상담 목적 외 사용하지 않습니다.</p>
+            <label htmlFor="message">상세 내용<span style={{color:'red'}}>*</span></label>
+            <textarea 
+              id="message" 
+              name="message" 
+              required 
+              style={{ ...inputStyle, minHeight: 140 }} 
+            />
+            <p style={{ fontSize: 12, color: "#667" }}>
+              ※ 작성해주신 개인정보는 상담 목적 외에는 사용되지 않습니다.
+            </p>
           </div>
 
-          <div className="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY" />
+          {/* Cloudflare Turnstile 위젯이 여기에 삽입됨 */}
+          <div 
+            className="cf-turnstile" 
+            data-sitekey="YOUR_TURNSTILE_SITE_KEY" 
+          />
 
+          {/* 폼 제출 시 Formspree를 통해 발송되는 이메일 설정 */}
           <input type="hidden" name="_subject" value="주연기술산업 홈페이지 신규 문의" />
           <input type="hidden" name="_language" value="ko" />
-          <div style={{display:"flex",gap:12}}>
+
+          {/* 제출 및 홈으로 이동 버튼 */}
+          <div style={{ display: "flex", gap: 12 }}>
             <button type="submit" style={btnPrimary}>보내기</button>
             <Link href="/" style={btnGhost}>홈으로</Link>
           </div>
         </form>
+        {/* 연락처 폼 끝 */}
 
-        <hr style={{margin:"28px 0"}} />
+        <hr style={{ margin: "28px 0" }} />
+
+        {/* 하단 연락처 정보 카드 */}
         <div style={grid3}>
-          <div style={card}><h3>대표번호</h3><p><a href="tel:+821012345678">010-1234-5678</a></p></div>
-          <div style={card}><h3>이메일</h3><p><a href="mailto:hello@jytechindustry.com">hello@jytechindustry.com</a></p></div>
-          <div style={card}><h3>주소</h3><p>서울특별시 ○○구 ○○로 00 (샘플)</p></div>
+          <div style={cardStyle}>
+            <h3>대표번호</h3>
+            <p><a href="tel:+821012345678">010-1234-5678</a></p>
+          </div>
+          <div style={cardStyle}>
+            <h3>이메일</h3>
+            <p><a href="mailto:hello@jytechindustry.com">hello@jytechindustry.com</a></p>
+          </div>
+          <div style={cardStyle}>
+            <h3>주소</h3>
+            <p>서울특별시 ○○구 ○○로 00 (샘플)</p>
+          </div>
         </div>
       </div>
     </section>
-  );
-}
-
-const input: React.CSSProperties = {width:"100%",padding:"12px",border:"1px solid #e5e7eb",borderRadius:10};
-const grid2: React.CSSProperties = {display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:16};
-const grid3: React.CSSProperties = {display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:16};
-const btnPrimary: React.CSSProperties = {padding:"12px 16px",borderRadius:10,border:"1px solid #f59e0b",background:"#f59e0b",fontWeight:700};
-const btnGhost: React.CSSProperties = {padding:"12px 16px",borderRadius:10,border:"1px solid #e5e7eb",fontWeight:700,display:"inline-block",textDecoration:"none"};
-const card: React.CSSProperties = {border:"1px solid #e5e7eb",borderRadius:12,padding:18,background:"#fff"};
+   );
+  }
