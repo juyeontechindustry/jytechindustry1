@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "주연기술산업 | 건설·토목·설비 전문",
+  title: "주연기술산업 | 건설·토목·설비·전기 전문",
   description: "현장 안전과 품질을 최우선으로 하는 주연기술산업",
 };
 

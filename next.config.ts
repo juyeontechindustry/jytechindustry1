@@ -4,7 +4,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   eslint: { ignoreDuringBuilds: true },
   images: { unoptimized: true },
-  // ❌ 절대 넣지 말 것: output: "export"
+  output: "export", // Enable static export for compatibility
 };
 
 export default nextConfig;
