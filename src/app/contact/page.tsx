@@ -11,6 +11,7 @@ export default function ContactPage() {
     padding: "12px",
     border: "1px solid #e5e7eb",
     borderRadius: 10,
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
   };
   const grid2: React.CSSProperties = {
     display: "grid",
@@ -26,9 +27,11 @@ export default function ContactPage() {
     padding: "12px 16px",
     borderRadius: 10,
     border: "1px solid #f59e0b",
-    background: "#f59e0b",
+    background: "linear-gradient(90deg, #f59e0b, #fbbf24)",
     fontWeight: 700,
-    color: "#111",       // 가독성을 위해 버튼 텍스트를 어두운 색으로
+    color: "#fff", // 버튼 텍스트를 밝은 색으로 변경
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    transition: "background 0.3s ease",
   };
   const btnGhost: React.CSSProperties = {
     padding: "12px 16px",
@@ -36,21 +39,26 @@ export default function ContactPage() {
     border: "1px solid #e5e7eb",
     fontWeight: 700,
     textDecoration: "none",
-    color: "#111",       // 고스트 버튼 텍스트 색 (필요에 따라 조정)
+    color: "#111",
     display: "inline-block",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+    transition: "color 0.3s ease, border-color 0.3s ease",
   };
   const cardStyle: React.CSSProperties = {
     border: "1px solid #e5e7eb",
     borderRadius: 12,
     padding: 18,
     background: "#fff",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    transition: "transform 0.3s ease",
+    textAlign: "center",
   };
 
   return (
-    <section style={{ padding: "48px 16px" }}>
+    <section style={{ padding: "48px 16px", background: "#f9fafb" }}>
       <div style={{ maxWidth: 820, margin: "0 auto" }}>
-        <h1>문의 / 견적 요청</h1>
-        <p>아래 양식을 작성해 주시면 담당자가 빠르게 연락드립니다.</p>
+        <h1 style={{ fontSize: "2.5rem", fontWeight: 700, marginBottom: "16px" }}>문의 / 견적 요청</h1>
+        <p style={{ fontSize: "1.125rem", color: "#555", marginBottom: "24px" }}>아래 양식을 작성해 주시면 담당자가 빠르게 연락드립니다.</p>
 
         {/* Cloudflare Turnstile 스크립트 로드 */}
         <Script 
@@ -68,24 +76,23 @@ export default function ContactPage() {
           {/* 성함, 연락처 등 기본 정보 입력 필드 */}
           <div style={grid2}>
             <div>
-              <label htmlFor="name">성함<span style={{color:'red'}}>*</span></label>
+              <label htmlFor="name" style={{ fontWeight: 600 }}>성함<span style={{color:'red'}}>*</span></label>
               <input id="name" name="name" required style={inputStyle} />
             </div>
             <div>
-              <label htmlFor="phone">연락처<span style={{color:'red'}}>*</span></label>
+              <label htmlFor="phone" style={{ fontWeight: 600 }}>연락처<span style={{color:'red'}}>*</span></label>
               <input id="phone" name="phone" required style={inputStyle} />
             </div>
             <div>
-              <label htmlFor="email">이메일</label>
+              <label htmlFor="email" style={{ fontWeight: 600 }}>이메일</label>
               <input id="email" type="email" name="email" style={inputStyle} />
             </div>
             <div>
-              <label htmlFor="location">현장 위치 (시/구)</label>
+              <label htmlFor="location" style={{ fontWeight: 600 }}>현장 위치 (시/구)</label>
               <input id="location" name="location" style={inputStyle} />
             </div>
             <div>
-              <label htmlFor="category">공사 구분</label>
-              {/* select 기본값을 첫 번째 옵션으로, 필요시 defaultValue 속성 사용 */}
+              <label htmlFor="category" style={{ fontWeight: 600 }}>공사 구분</label>
               <select id="category" name="category" style={inputStyle}>
                 <option value="건축/리모델링">건축/리모델링</option>
                 <option value="토목/외부">토목/외부</option>
@@ -95,7 +102,7 @@ export default function ContactPage() {
               </select>
             </div>
             <div>
-              <label htmlFor="schedule">예상 일정</label>
+              <label htmlFor="schedule" style={{ fontWeight: 600 }}>예상 일정</label>
               <input 
                 id="schedule" 
                 name="schedule" 
@@ -107,7 +114,7 @@ export default function ContactPage() {
 
           {/* 상세 내용 입력란 */}
           <div>
-            <label htmlFor="message">상세 내용<span style={{color:'red'}}>*</span></label>
+            <label htmlFor="message" style={{ fontWeight: 600 }}>상세 내용<span style={{color:'red'}}>*</span></label>
             <textarea 
               id="message" 
               name="message" 
@@ -137,24 +144,27 @@ export default function ContactPage() {
         </form>
         {/* 연락처 폼 끝 */}
 
-        <hr style={{ margin: "28px 0" }} />
+        <hr style={{ margin: "28px 0", borderColor: "#e5e7eb" }} />
 
         {/* 하단 연락처 정보 카드 */}
         <div style={grid3}>
           <div style={cardStyle}>
-            <h3>대표번호</h3>
-            <p><a href="tel:+821012345678">010-1234-5678</a></p>
+            <img src="/public/phone-icon.svg" alt="Phone Icon" style={{ width: "40px", marginBottom: "8px" }} />
+            <h3 style={{ fontWeight: 600 }}>대표번호</h3>
+            <p><a href="tel:+821012345678" style={{ color: "#f59e0b", textDecoration: "none" }}>010-1234-5678</a></p>
           </div>
           <div style={cardStyle}>
-            <h3>이메일</h3>
-            <p><a href="mailto:hello@jytechindustry.com">hello@jytechindustry.com</a></p>
+            <img src="/public/email-icon.svg" alt="Email Icon" style={{ width: "40px", marginBottom: "8px" }} />
+            <h3 style={{ fontWeight: 600 }}>이메일</h3>
+            <p><a href="mailto:hello@jytechindustry.com" style={{ color: "#f59e0b", textDecoration: "none" }}>hello@jytechindustry.com</a></p>
           </div>
           <div style={cardStyle}>
-            <h3>주소</h3>
+            <img src="/public/location-icon.svg" alt="Location Icon" style={{ width: "40px", marginBottom: "8px" }} />
+            <h3 style={{ fontWeight: 600 }}>주소</h3>
             <p>서울특별시 ○○구 ○○로 00 (샘플)</p>
           </div>
         </div>
       </div>
     </section>
    );
-  }
+}
